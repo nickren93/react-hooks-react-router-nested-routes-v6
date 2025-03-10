@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import UserCard from "../components/UserCard";
-import NavBar from "../components/NavBar";
+//add import Outlet:
+import { Outlet, useOutletContext } from "react-router-dom";
 
 function Home() {
+
+  /*
   const [users, setUsers] = useState([]);
 
   useEffect(() =>{
@@ -11,21 +14,20 @@ function Home() {
       .then(data => setUsers(data))
       .catch(error => console.error(error));
   }, []);
+  */
+
+  const users = useOutletContext();
   
   const userList = users.map(user =>{
     return <UserCard key={user.id} user={user}/>;
   });
 
   return (
-    <>
-      <header>
-        <NavBar />
-      </header>
-      <main>
-        <h1>Home!</h1>
-        {userList}
-      </main>
-    </>
+    <main>
+      <h1>Home!</h1>
+      <Outlet context={users}/>
+      {userList}
+    </main>
   );
 };
 
